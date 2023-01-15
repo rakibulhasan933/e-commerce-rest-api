@@ -28,6 +28,10 @@ async function run() {
 		});
 
 		// GET Products
+		app.get('/products', async (req, res) => {
+			const products = await productsCollection.find().toArray();
+			res.send(products)
+		});
 
 
 	} finally {
