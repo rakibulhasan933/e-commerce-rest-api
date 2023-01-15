@@ -3,6 +3,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const cors = require('cors');
 const dotenv = require('dotenv').config();
 const ObjectId = require('mongodb').ObjectId;
+const fileUpload = require('express-fileupload');
 
 
 const app = express();
@@ -11,6 +12,7 @@ const port = process.env.DB_PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 
 // Database Connection
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.t2kmaoa.mongodb.net/?retryWrites=true&w=majority`;
@@ -21,9 +23,25 @@ async function run() {
 		const productsCollection = client.db("walker-shop").collection("products");
 		console.log('Database Connected');
 
-		// POST  Products Add
+		// POST  Products add
 		app.post('/products', async (req, res) => {
-			const product = req.body;
+			const title = req.body.title;
+			const price = req.body.price;
+			const oldPice = req.body.oldPrice;
+			const pic = req.files.image.data;
+			const encodedPic = pic.toString('base64');
+			const imgBuffer = Buffer.from(encodedPic, 'base64');
+			// const pic1 = req.body.files[0].image1;
+			// const picData1 = pic1.data;
+			// const encodedPic1 = picData1.toString('base64');
+			// const imgBuffer1 = Buffer.from(encodedPic1, 'base64');
+			const product = {
+				title,
+				image: imgBuffer,
+				// image1: imgBuffer1,
+				price,
+				oldPice
+			};
 			const result = await productsCollection.insertOne(product);
 			res.send(result);
 		});
