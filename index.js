@@ -28,15 +28,19 @@ async function run() {
 			const title = req.body.title;
 			const price = req.body.price;
 			const oldPice = req.body.oldPrice;
-			const pic = req.files.image.data;
-			const encodedPic = pic.toString('base64');
+			const pic = req.files.image;
+			const picData = pic.data;
+			const encodedPic = picData.toString('base64');
 			const imgBuffer = Buffer.from(encodedPic, 'base64');
-			const pic1 = req.files.image1.data.toString('base64');
-			const imgBuffer1 = Buffer.from(pic1, 'base64');
+			const pic1 = req.files.image1;
+			const picData1 = pic1.data;
+			const encodedPic1 = picData1.toString('base64');
+			const imgBuffer1 = Buffer.from(encodedPic1, 'base64');
 			const product = {
 				title,
-				image: imgBuffer,
-				image1: imgBuffer1,
+				images: {
+					imgBuffer, imgBuffer1
+				},
 				price,
 				oldPice
 			};
