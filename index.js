@@ -28,6 +28,12 @@ async function run() {
 			const title = req.body.title;
 			const price = req.body.price;
 			const oldPice = req.body.oldPrice;
+			const dec = req.body.dec;
+			const type = req.body.type;
+			const care = req.body.care;
+			const origin = req.body.origin;
+			const color = req.body.color;
+			const country = req.body.country;
 			const pic = req.files.image;
 			const picData = pic.data;
 			const encodedPic = picData.toString('base64');
@@ -38,6 +44,12 @@ async function run() {
 			const imgBuffer1 = Buffer.from(encodedPic1, 'base64');
 			const product = {
 				title,
+				dec,
+				type,
+				color,
+				care,
+				origin,
+				country,
 				image: imgBuffer,
 				image1: imgBuffer1,
 				price,
