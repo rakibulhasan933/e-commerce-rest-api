@@ -38,9 +38,8 @@ async function run() {
 			const imgBuffer1 = Buffer.from(encodedPic1, 'base64');
 			const product = {
 				title,
-				images: {
-					imgBuffer, imgBuffer1
-				},
+				image: imgBuffer,
+				image1: imgBuffer1,
 				price,
 				oldPice
 			};
